@@ -20,6 +20,13 @@ describe GildedRose do
       expect(items[0].name).to eq "+5 Dexterity Vest"
     end
 
+    it 'decreases the sell_in by 1 for all the products except Sulfuras' do
+      gilded_rose.update_quality()
+      expect(items[0].sell_in).to eq 0
+      expect(items[2].sell_in).to eq 1
+      expect(items[5].sell_in).to eq 10
+    end
+
     it 'does not lower the quality below 0' do
       gilded_rose.update_quality()
       expect(items[0].quality).to eq 0
