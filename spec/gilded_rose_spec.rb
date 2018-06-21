@@ -36,9 +36,14 @@ describe GildedRose do
       expect(items[3].quality).to eq 50
     end
 
-    it 'does not update the quality of Sulfuras' do
+    it 'does not change the quality of Sulfuras' do
       gilded_rose.update_quality()
       expect(items[4].quality).to eq 40
+    end
+
+    it 'does not change the sell_in value of Sulfuras' do
+      gilded_rose.update_quality()
+      expect(items[4].sell_in).to eq 10
     end
 
   end
