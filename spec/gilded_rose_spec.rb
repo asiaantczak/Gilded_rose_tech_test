@@ -3,7 +3,8 @@ require 'gilded_rose'
 describe GildedRose do
 
   let(:items) { [Item.new(name="+5 Dexterity Vest", sell_in=1, quality=0),
-                 Item.new(name="+5 Dexterity Vest", sell_in=0, quality=4)]}
+                 Item.new(name="+5 Dexterity Vest", sell_in=0, quality=4),
+                 Item.new(name="Aged Brie", sell_in=2, quality=0)]}
   let(:gilded_rose) { described_class.new(items) }
 
   describe '#update_quality' do
@@ -20,6 +21,11 @@ describe GildedRose do
     it 'degrades quality twice as fast for items with sellIn 0' do
       gilded_rose.update_quality()
       expect(items[1].quality).to eq 2
+    end
+
+    it 'increases the quality of Aged Brie' do
+      gilded_rose.update_quality()
+      expect(items[2].quality).to eq 1
     end
 
   end
