@@ -1,5 +1,7 @@
 class GildedRose
 
+  attr_reader :items
+
   def initialize(items)
     @items = items
   end
@@ -42,10 +44,6 @@ class GildedRose
             end
           else
             item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < 50
-            item.quality = item.quality + 1
           end
         end
       end

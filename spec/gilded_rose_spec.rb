@@ -10,9 +10,16 @@ describe GildedRose do
                  Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=11, quality=40),
                  Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=40),
                  Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=40),
-                 Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=0, quality=40)] }
+                 Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=0, quality=40),
+                 Item.new(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=49)] }
 
   let(:gilded_rose) { described_class.new(items) }
+
+  describe 'initialize' do
+    it 'has items on initialize' do
+      expect(gilded_rose.items).to eq items
+    end
+  end
 
   describe '#update_quality' do
     it 'does not change the name' do
@@ -21,10 +28,7 @@ describe GildedRose do
     end
 
     it 'decreases the sell_in by 1 for all the products except Sulfuras' do
-      gilded_rose.update_quality()
-      expect(items[0].sell_in).to eq 0
-      expect(items[2].sell_in).to eq 1
-      expect(items[5].sell_in).to eq 10
+      expect { gilded_rose.update_quality() }.to change { items[0].sell_in}.by -1
     end
 
     it 'does not lower the quality below 0' do
@@ -37,15 +41,15 @@ describe GildedRose do
       expect(items[1].quality).to eq 2
     end
 
-    it 'increases the quality of Aged Brie' do
-      gilded_rose.update_quality()
-      expect(items[2].quality).to eq 1
+    it 'increases the quality of Aged Brie by 1 ' do
+      expect { gilded_rose.update_quality() }.to change { items[2].quality }.by 1
     end
 
     it 'increases the quality of item no more than up to 50' do
       gilded_rose.update_quality()
       gilded_rose.update_quality()
       expect(items[3].quality).to eq 50
+      expect(items[9].quality).to eq 50
     end
 
     it 'does not change the quality of Sulfuras' do
@@ -79,4 +83,29 @@ describe GildedRose do
     end
 
   end
+end
+
+describe Item do
+  let(:item) { described_class.new(name="+5 Dexterity Vest", sell_in=1, quality=0) }
+
+  describe 'initialize' do
+    it 'has a name' do
+      expect(item.name).to eq "+5 Dexterity Vest"
+    end
+
+    it 'has a sell_in value' do
+      expect(item.sell_in).to eq 1
+    end
+
+    it 'has a quality' do
+      expect(item.quality).to eq 0
+    end
+  end
+
+  describe "#to_s" do
+    it 'prints the name, sell in and quality of each item as a string' do
+      expect(item.to_s).to eq "+5 Dexterity Vest, 1, 0"
+    end
+  end
+
 end
