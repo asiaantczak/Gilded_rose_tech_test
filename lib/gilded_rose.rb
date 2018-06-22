@@ -42,7 +42,7 @@ def update_backstage_passes(item)
     else
       item.quality = 0
     end
-    item.sell_in > 0 ? item.sell_in -= 1 : item.sell_in
+    item.sell_in <= 0 ? item.sell_in : item.sell_in -= 1
   end
 end
 

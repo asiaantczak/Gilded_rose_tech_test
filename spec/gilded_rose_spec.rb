@@ -46,17 +46,8 @@ describe GildedRose do
     end
 
     it 'increases the quality of item no more than up to 50' do
-      p "before"
-      p items[9].sell_in
-      p items[9].quality
       gilded_rose.update_quality()
-      p "after 1st update"
-      p items[9].sell_in
-      p items[9].quality
       gilded_rose.update_quality()
-      p "after 2nd update"
-      p items[9].sell_in
-      p items[9].quality
       expect(items[3].quality).to eq 50
       expect(items[9].quality).to eq 50
     end
